@@ -56,9 +56,9 @@ namespace MovieReservationAPI.Controllers
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var book = await _moviesService.Get(id);
+            Movie? movie = await _moviesService.Get(id);
 
-            if (book is null)
+            if (movie is null)
             {
                 return NotFound();
             }

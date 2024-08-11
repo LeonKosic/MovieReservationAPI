@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieReservationAPI.Data;
+using MovieReservationAPI.Models;
 using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
@@ -14,9 +15,12 @@ namespace MovieReservationAPI.Services
         public async Task<Seat?> Get(int id) =>
             await _context.Seats.FindAsync(id);
 
-        public async Task Create(Seat newSeat)
+        public async Task Create(SeatDTO newSeat)
         {
-            await _context.Seats.AddAsync(newSeat);
+            Theater? theater = await _context.Theaters.FindAsync(newSeat.TheaterId);
+            if (theater is null) return;//todo
+            Seat seat = new() { Theater=theater, TheaterId=newSeat.TheaterId};
+            await _context.Seats.AddAsync(seat);
             await _context.SaveChangesAsync();
         }
 

@@ -30,16 +30,15 @@ namespace ScheduleReservationAPI.Controllers
         }
         [HttpPost, Authorize]
 
-        public async Task<IActionResult> Post(Schedule schedule)
+        public async Task<IActionResult> Post(ScheduleDTO schedule)
         {
-            Schedule newSchedule = new() { MovieId=schedule.MovieId, Start = schedule.Start, End = schedule.End, Time = schedule.Time };
-            await _schedulesService.Create(newSchedule);
-            return CreatedAtAction(nameof(Get), new { id = newSchedule.Id }, newSchedule);
+            await _schedulesService.Create(schedule);
+            return CreatedAtAction(nameof(Get), schedule);
         }
 
         [HttpPut("id"), Authorize]
         [OpenApiOperationProcessor(typeof(Schedule))]
-        public async Task<IActionResult> Update(int id, Schedule updatedSchedule)
+        public async Task<IActionResult> Update(int id, ScheduleDTO updatedSchedule)
         {
             try
             {
@@ -54,9 +53,9 @@ namespace ScheduleReservationAPI.Controllers
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var book = await _schedulesService.Get(id);
+            Schedule? schedule = await _schedulesService.Get(id);
 
-            if (book is null)
+            if (schedule is null)
             {
                 return NotFound();
             }
