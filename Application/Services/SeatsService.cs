@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using Domain.Interfaces.IRepositories;
 using MovieReservationAPI.Interfaces.IServices;
 using MovieReservationAPI.Models;
@@ -6,33 +7,39 @@ using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class SeatsService(ISeatRepository repository) : ISeatsService
+    public class SeatsService(ISeatRepository repository,IMapper mapper) : ISeatsService
     {
         private readonly ISeatRepository _repository = repository;
-
-        public Task Create(Seat newSeat)
+        private readonly IMapper _mapper = mapper;
+        public async Task Create(SeatDTO newSeat)
         {
-            throw new NotImplementedException();
+            Seat seat = _mapper.Map<Seat>(newSeat);
+            await _repository.Create(seat);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var seat = await _repository.Get(id);
+            if(seat!=null)
+                     await _repository.Delete(seat);
         }
 
-        public Task<ICollection<SeatDTO>> Get()
+        public async Task<ICollection<SeatDTO>> Get()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<ICollection<SeatDTO>>(await _repository.Get());
         }
 
-        public Task<SeatDTO?> Get(int id)
+        public async Task<SeatDTO?> Get(int id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<SeatDTO>(await _repository.Get(id)); 
         }
 
-        public Task Update(int id, Seat updatedSeat)
+        public async Task Update(int id, SeatDTO updatedSeat)
         {
-            throw new NotImplementedException();
+            Seat? seat = await _repository.Get(id);
+            if (seat is null) return;
+            _mapper.Map(updatedSeat,seat);
+            await _repository.Save();
         }
     }
 }

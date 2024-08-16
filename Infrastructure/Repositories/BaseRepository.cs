@@ -40,5 +40,9 @@ namespace Infrastructure.Repositories
             _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

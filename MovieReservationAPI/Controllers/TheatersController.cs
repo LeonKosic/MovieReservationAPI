@@ -1,67 +1,43 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieReservationAPI.Models.Entities;
-using MovieReservationAPI.Models;
 using NSwag.Annotations;
-using MovieReservationAPI.Services;
-
+using MovieReservationAPI.Models;
+using MovieReservationAPI.Interfaces.IServices;
 namespace MovieReservationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TheatersController(TheatersService theatersService) : ControllerBase
+    public class TheatersController(ITheatersService theatersService) : ControllerBase
     {
-        private readonly TheatersService _theatersService = theatersService;
+        private readonly ITheatersService _theatersService = theatersService;
 
         [HttpGet]
-        public async Task<ICollection<Theater>> Get() =>
+        public async Task<ICollection<TheaterDTO>> Get() =>
             await _theatersService.Get();
 
         [HttpGet("id")]
-        public async Task<ActionResult<Theater>> Get(int id)
-        {
-            var theater = await _theatersService.Get(id);
-            if (theater == null)
-            {
-                return NotFound();
-            }
-            return theater;
-        }
+        public async Task<ActionResult<TheaterDTO>> Get(int id)=> 
+            await _theatersService.Get(id);
+        
         [HttpPost, Authorize]
 
-        public async Task<IActionResult> Post(Theater theater)
+        public async Task<IActionResult> Post(TheaterDTO theater)
         {
             await _theatersService.Create(theater);
             return CreatedAtAction(nameof(Get), theater);
         }
 
         [HttpPut("id"), Authorize]
-        [OpenApiOperationProcessor(typeof(Theater))]
-        public async Task<IActionResult> Update(int id, Theater updatedTheater)
+        public async Task<IActionResult> Update(int id, TheaterDTO updatedTheater)
         {
-            try
-            {
-                await _theatersService.Update(id, updatedTheater);
-                return Ok(updatedTheater);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _theatersService.Update(id, updatedTheater);
+            return Ok(updatedTheater);
         }
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            Theater? theater = await _theatersService.Get(id);
-
-            if (theater is null)
-            {
-                return NotFound();
-            }
-
             await _theatersService.Delete(id);
-
             return NoContent();
         }
     }

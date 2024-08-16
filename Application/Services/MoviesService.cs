@@ -1,37 +1,45 @@
-﻿using Domain.Interfaces.IRepositories;
+﻿using AutoMapper;
+using Domain.Interfaces.IRepositories;
 using MovieReservationAPI.Interfaces.IServices;
 using MovieReservationAPI.Models;
 using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class MoviesService(IMovieRepository repository) : IMoviesService
+    public class MoviesService(IMovieRepository repository,IMapper mapper) : IMoviesService
     {
         private readonly IMovieRepository _repository = repository;
-
-        public Task Create(Movie newMovie)
+        private readonly IMapper _mapper = mapper;
+        public async Task Create(MovieDTO newMovie)
         {
-            throw new NotImplementedException();
+            Movie movie = _mapper.Map<Movie>(newMovie);
+            await _repository.Create(movie);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Movie? movie = await _repository.Get(id);    
+            if(movie is not null)await _repository.Delete(movie);
         }
 
-        public Task<ICollection<MovieDTO>> Get()
+        public async Task<ICollection<MovieDTO>> Get()
         {
-            throw new NotImplementedException();
+            return  _mapper.Map<ICollection<MovieDTO>>(await _repository.Get());
         }
 
-        public Task<MovieDTO?> Get(int id)
+        public async Task<MovieDTO?> Get(int id)
         {
-            throw new NotImplementedException();
+            Movie? movie =await _repository.Get(id);
+            if (movie is null) return null;
+            return _mapper.Map<MovieDTO>(movie);
         }
 
-        public Task Update(int id, Movie updatedMovie)
+        public async Task Update(int id, MovieDTO updatedMovie)
         {
-            throw new NotImplementedException();
+            Movie? movie = await _repository.Get(id);   
+            if (movie is null) return;
+            _mapper.Map(updatedMovie, movie);
+            await _repository.Save();
         }
     }
 }

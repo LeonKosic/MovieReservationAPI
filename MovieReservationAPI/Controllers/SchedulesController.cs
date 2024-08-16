@@ -1,64 +1,46 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MovieReservationAPI.Models.Entities;
 using MovieReservationAPI.Models;
-using ScheduleReservationAPI.Services;
 using NSwag.Annotations;
+using MovieReservationAPI.Interfaces.IServices;
 
 namespace ScheduleReservationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchedulesController(SchedulesService schedulesService) : ControllerBase
+    public class SchedulesController(ISchedulesService schedulesService) : ControllerBase
     {
-        private readonly SchedulesService _schedulesService = schedulesService;
+        private readonly ISchedulesService _schedulesService = schedulesService;
 
         [HttpGet]
-        public async Task<ICollection<Schedule>> Get() =>
+        public async Task<ICollection<ScheduleDTO>> Get() =>
             await _schedulesService.Get();
 
         [HttpGet("id")]
-        public async Task<ActionResult<Schedule>> Get(int id)
+        public async Task<ActionResult<ScheduleDTO>> Get(int id)
         {
-            var schedule = await _schedulesService.Get(id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-            return schedule;
+            return await _schedulesService.Get(id);
+            
         }
         [HttpPost, Authorize]
 
-        public async Task<IActionResult> Post(ScheduleDTO schedule)
+        public async Task<IActionResult> Post(ScheduleDTO scheduleDTO)
         {
-            await _schedulesService.Create(schedule);
-            return CreatedAtAction(nameof(Get), schedule);
+            await _schedulesService.Create(scheduleDTO);
+            return CreatedAtAction(nameof(Get), scheduleDTO);
         }
 
         [HttpPut("id"), Authorize]
-        [OpenApiOperationProcessor(typeof(Schedule))]
         public async Task<IActionResult> Update(int id, ScheduleDTO updatedSchedule)
         {
-            try
-            {
-                await _schedulesService.Update(id, updatedSchedule);
-                return Ok(updatedSchedule);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
+            await _schedulesService.Update(id, updatedSchedule);
+            return Ok(updatedSchedule);
+           
         }
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            Schedule? schedule = await _schedulesService.Get(id);
-
-            if (schedule is null)
-            {
-                return NotFound();
-            }
 
             await _schedulesService.Delete(id);
 

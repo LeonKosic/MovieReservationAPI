@@ -9,8 +9,8 @@ namespace MovieReservationAPI.Interfaces.IServices
 
         public Task<TDO?> Get(int id);
 
-        public Task Create(T newTheater);
-        public Task Update(int id, T updatedTheater);
+        public Task Create(TDO newTheater);
+        public Task Update(int id, TDO updatedTheater);
         public Task Delete(int id);
     }
 }

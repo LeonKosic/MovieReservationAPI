@@ -1,33 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieReservationAPI.Models.Entities;
 using MovieReservationAPI.Models;
-using NSwag.Annotations;
-using MovieReservationAPI.Services;
+using MovieReservationAPI.Interfaces.IServices;
 
 namespace MovieReservationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeatsController ( SeatsService seatsService) : ControllerBase
+    public class SeatsController ( ISeatsService seatsService) : ControllerBase
     {
-        private readonly SeatsService _seatsService = seatsService;
+        private readonly ISeatsService _seatsService = seatsService;
 
         [HttpGet]
-        public async Task<ICollection<Seat>> Get() =>
+        public async Task<ICollection<SeatDTO>> Get() =>
             await _seatsService.Get();
 
         [HttpGet("id")]
-        public async Task<ActionResult<Seat>> Get(int id)
-        {
-            var seat = await _seatsService.Get(id);
-            if (seat == null)
-            {
-                return NotFound();
-            }
-            return seat;
-        }
+        public async Task<ActionResult<SeatDTO>> Get(int id) => 
+            await _seatsService.Get(id);
+            
+        
         [HttpPost, Authorize]
 
         public async Task<IActionResult> Post(SeatDTO seat)
@@ -36,16 +29,17 @@ namespace MovieReservationAPI.Controllers
             return CreatedAtAction(nameof(Get), seat);
         }
 
+        [HttpPut("id"),Authorize]
+        public async Task<IActionResult> Update(int id, SeatDTO seat)
+        {
+            await _seatsService.Update(id, seat);
+            return Ok(seat);
+        }
+
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            Seat? seat = await _seatsService.Get(id);
-
-            if (seat is null)
-            {
-                return NotFound();
-            }
-
+         
             await _seatsService.Delete(id);
 
             return NoContent();

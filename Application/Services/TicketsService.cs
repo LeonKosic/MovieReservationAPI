@@ -1,40 +1,47 @@
-﻿using Domain.Interfaces.IRepositories;
+﻿using AutoMapper;
+using Domain.Interfaces.IRepositories;
 using MovieReservationAPI.Interfaces.IServices;
 using MovieReservationAPI.Models;
 using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class TicketsService(ITicketRepository repository) : ITicketsService
+    public class TicketsService(ITicketRepository repository, IMapper mapper) : ITicketsService
     {
         private ITicketRepository _repository = repository;
-        public Task Create(Ticket newTheater)
+        private readonly IMapper _mapper = mapper;
+        public async Task Create(TicketDTO newTicket)
         {
-            throw new NotImplementedException();
+            Ticket ticket = _mapper.Map<Ticket>(newTicket);
+            await _repository.Create(ticket);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var ticket = await _repository.Get(id);
+            if(ticket!=null) await _repository.Delete(ticket);
         }
 
-        public Task<ICollection<TicketDTO>> Get()
+        public async Task<ICollection<TicketDTO>> Get()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<ICollection<TicketDTO>>(await _repository.Get());
         }
 
-        public Task<TicketDTO?> Get(int id)
+        public async Task<TicketDTO?> Get(int id)
         {
-            throw new NotImplementedException();
+            var ticket = await _repository.Get(id);
+            return _mapper.Map<TicketDTO>(ticket);
         }
 
-        public Task Update(int id, Ticket updatedTheater)
+        public async Task Update(int id, TicketDTO updatedTicket)
         {
-            throw new NotImplementedException();
+            var ticket = await _repository.Get(id);
+            _mapper.Map(updatedTicket,ticket);
+            await _repository.Save();
         }
-        public Task<TicketDTO> Buy(int id, string userId)
+        public async Task<TicketDTO> Buy(int id, string userId)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();//TODO
         }
     }
 }
