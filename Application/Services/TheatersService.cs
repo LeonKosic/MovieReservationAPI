@@ -1,38 +1,37 @@
-﻿using MovieReservationAPI.Models.Entities;
+﻿using Domain.Interfaces.IRepositories;
+using MovieReservationAPI.Interfaces.IServices;
+using MovieReservationAPI.Models;
+using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class TheatersService(ApplicationDbContext dbContext)
+    public class TheatersService(ITheaterRepository repository) : ITheatersService
     {
-        private readonly ApplicationDbContext _context = dbContext;
+        private readonly ITheaterRepository _repository = repository;
 
-        public async Task<ICollection<Theater>> Get() =>
-            await _context.Theaters.ToListAsync();
-
-        public async Task<Theater?> Get(int id) =>
-            await _context.Theaters.FindAsync(id);
-
-        public async Task Create(Theater newTheater)
+        public Task Create(Theater newTheater)
         {
-            await _context.Theaters.AddAsync(newTheater);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Update(int id, Theater updatedTheater)
+        public Task Delete(int id)
         {
-            Theater? Theater = await _context.Theaters.FindAsync(id);
-            if (Theater is null) return;
-            Theater.Name = updatedTheater.Name;
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Delete(int id)
+        public Task<ICollection<TheaterDTO>> Get()
         {
-            Theater? Theater = await _context.Theaters.FindAsync(id);
-            if (Theater is null)
-                return;
-            _context.Theaters.Remove(Theater);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task<TheaterDTO?> Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(int id, Theater updatedTheater)
+        {
+            throw new NotImplementedException();
         }
     }
 }

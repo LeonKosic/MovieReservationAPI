@@ -1,6 +1,4 @@
-﻿
-
-namespace Domain.Interfaces.IRepositories
+﻿namespace Domain.Interfaces.IRepositories
 {
     public interface IBaseRepository<T> where T : class
     {

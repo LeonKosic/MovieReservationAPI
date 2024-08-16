@@ -1,46 +1,37 @@
-﻿using MovieReservationAPI.Models;
+﻿using Domain.Interfaces.IRepositories;
+using MovieReservationAPI.Interfaces.IServices;
+using MovieReservationAPI.Models;
 using MovieReservationAPI.Models.Entities;
 
 namespace ScheduleReservationAPI.Services
 {
-    public class SchedulesService(ApplicationDbContext dbContext)
+    public class SchedulesService(IScheduleRepository repository) : ISchedulesService
     {
-        private readonly ApplicationDbContext _context = dbContext;
+        private readonly IScheduleRepository _repository = repository;
 
-        public async Task<ICollection<Schedule>> Get() =>
-            await _context.Schedules.ToListAsync();
-
-        public async Task<Schedule?> Get(int id) =>
-            await _context.Schedules.FindAsync(id);
-
-        public async Task Create(ScheduleDTO scheduleDTO)
+        public Task Create(Schedule newSchedule)
         {
-            Movie? movie = await _context.Movies.FindAsync(scheduleDTO.MovieId);
-            if (movie == null) return; //todo
-            Theater? theater = await _context.Theaters.FindAsync(scheduleDTO.TheaterId);
-            if (theater == null) return;//todo
-            Schedule schedule = new() { Movie = movie, Theater = theater, MovieId=scheduleDTO.MovieId, End= scheduleDTO.End, Start= scheduleDTO.Start, TheaterId=scheduleDTO.TheaterId, Time = scheduleDTO.Time}; 
-            await _context.Schedules.AddAsync(schedule);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Update(int id, ScheduleDTO updatedSchedule)
+        public Task Delete(int id)
         {
-            Schedule? Schedule = await _context.Schedules.FindAsync(id);
-            if (Schedule is null) return;//todo
-            Schedule.Start = updatedSchedule.Start;
-            Schedule.End = updatedSchedule.End;
-            Schedule.Time = updatedSchedule.Time;
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Delete(int id)
+        public Task<ICollection<ScheduleDTO>> Get()
         {
-            Schedule? Schedule = await _context.Schedules.FindAsync(id);
-            if (Schedule is null)
-                return; //todo
-            _context.Schedules.Remove(Schedule);
-           await _context.SaveChangesAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task<ScheduleDTO?> Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(int id, Schedule updatedSchedule)
+        {
+            throw new NotImplementedException();
         }
     }
 }

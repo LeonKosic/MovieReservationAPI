@@ -1,41 +1,37 @@
-﻿using MovieReservationAPI.Models.Entities;
+﻿using Domain.Interfaces.IRepositories;
+using MovieReservationAPI.Interfaces.IServices;
+using MovieReservationAPI.Models;
+using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class MoviesService(ApplicationDbContext dbContext)
+    public class MoviesService(IMovieRepository repository) : IMoviesService
     {
-        private readonly ApplicationDbContext _context = dbContext;
+        private readonly IMovieRepository _repository = repository;
 
-        public async Task<ICollection<Movie>> Get() =>
-            await _context.Movies.ToListAsync();
-
-        public async Task<Movie?> Get(int id) =>
-            await _context.Movies.FindAsync(id);
-
-        public async Task Create(Movie newMovie)
+        public Task Create(Movie newMovie)
         {
-            await _context.Movies.AddAsync(newMovie);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Update(int id, Movie updatedMovie)
+        public Task Delete(int id)
         {
-            Movie? movie = await _context.Movies.FindAsync(id);
-            if (movie is null) return; //todo
-            movie.Name = updatedMovie.Name;
-            movie.Description = updatedMovie.Description;
-            movie.Duration = updatedMovie.Duration;
-            movie.ReleaseDate = updatedMovie.ReleaseDate;
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task Delete(int id)
+        public Task<ICollection<MovieDTO>> Get()
         {
-            Movie? movie = await _context.Movies.FindAsync(id);
-            if (movie is null)
-                return; //todo
-            _context.Movies.Remove(movie);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
+        }
+
+        public Task<MovieDTO?> Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(int id, Movie updatedMovie)
+        {
+            throw new NotImplementedException();
         }
     }
 }
