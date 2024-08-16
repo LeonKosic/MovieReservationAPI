@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using MovieReservationAPI.Data;
-using MovieReservationAPI.Models;
+﻿using MovieReservationAPI.Models;
 using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services

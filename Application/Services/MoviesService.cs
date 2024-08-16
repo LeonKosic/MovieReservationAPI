@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using MovieReservationAPI.Data;
-using MovieReservationAPI.Models.Entities;
+﻿using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {

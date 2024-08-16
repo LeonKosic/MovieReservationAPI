@@ -3,7 +3,7 @@ using MovieReservationAPI.Models;
 
 namespace MovieReservationAPI.Interfaces.IServices
 {
-    public interface ICrudService<T>
+    public interface IBaseService<T>
     {
         public Task<ICollection<T>> Get();
 

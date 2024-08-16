@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MovieReservationAPI.Data;
-using MovieReservationAPI.Models.Entities;
+﻿using MovieReservationAPI.Models.Entities;
 using MovieReservationAPI.Models;
 
 namespace MovieReservationAPI.Interfaces.IServices

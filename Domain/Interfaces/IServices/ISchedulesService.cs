@@ -2,7 +2,7 @@
 
 namespace MovieReservationAPI.Interfaces.IServices
 {
-    public interface ISchedulesService:ICrudService<ScheduleDTO>
+    public interface ISchedulesService:IBaseService<ScheduleDTO>
     {
     }
 }

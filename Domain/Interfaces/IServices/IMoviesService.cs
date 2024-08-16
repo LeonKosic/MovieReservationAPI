@@ -2,7 +2,7 @@
 
 namespace MovieReservationAPI.Interfaces.IServices
 {
-    public interface IMoviesService : ICrudService<MovieDTO>
+    public interface IMoviesService : IBaseService<MovieDTO>
     {
     }
 }
