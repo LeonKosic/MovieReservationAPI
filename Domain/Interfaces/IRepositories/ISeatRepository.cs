@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.IRepositories
 {
-    internal interface ISeatRepository:IBaseRepository<Seat>
+    public interface ISeatRepository:IBaseRepository<Seat>
     {
     }
 }

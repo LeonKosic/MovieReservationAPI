@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.IRepositories
 {
-    internal interface IScheduleRepository:IBaseRepository<Schedule>
+    public interface IScheduleRepository:IBaseRepository<Schedule>
     {
     }
 }

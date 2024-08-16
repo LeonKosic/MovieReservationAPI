@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    internal class BaseRepository<T>(ApplicationDbContext dbContext) : IBaseRepository<T> where T : class
+    public class BaseRepository<T>(ApplicationDbContext dbContext) : IBaseRepository<T> where T : class
     {
        private readonly ApplicationDbContext _context = dbContext;
 

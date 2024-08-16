@@ -1,9 +1,8 @@
 ﻿using MovieReservationAPI.Models.Entities;
 
-
 namespace Domain.Interfaces.IRepositories
 {
-    internal interface ITheaterRepository:IBaseRepository<Theater>
+    public interface ITheaterRepository:IBaseRepository<Theater>
     {
     }
 }

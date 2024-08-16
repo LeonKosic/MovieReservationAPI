@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.IRepositories
 {
-    internal interface ITicketRepository:IBaseRepository<Ticket>
+    public interface ITicketRepository:IBaseRepository<Ticket>
     {
     }
 }
