@@ -8,9 +8,9 @@ namespace ScheduleReservationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SchedulesController(ISchedulesService schedulesService) : ControllerBase
+    public class SchedulesController(IScheduleService schedulesService) : ControllerBase
     {
-        private readonly ISchedulesService _schedulesService = schedulesService;
+        private readonly IScheduleService _schedulesService = schedulesService;
 
         [HttpGet]
         public async Task<ICollection<ScheduleDTO>> Get() =>

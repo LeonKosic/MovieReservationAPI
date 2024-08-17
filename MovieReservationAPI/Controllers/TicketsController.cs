@@ -9,9 +9,9 @@ namespace MovieReservationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketsController(ITicketsService ticketsService) : ControllerBase
+    public class TicketsController(ITicketService ticketsService) : ControllerBase
     {
-        private readonly ITicketsService _ticketsService = ticketsService;
+        private readonly ITicketService _ticketsService = ticketsService;
 
         [HttpGet]
         public async Task<ICollection<TicketDTO>> Get() =>

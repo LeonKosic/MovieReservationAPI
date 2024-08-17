@@ -3,7 +3,7 @@ using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Interfaces.IServices
 {
-    public interface ISchedulesService:IBaseService<Schedule,ScheduleDTO>
+    public interface IMovieService : IBaseService<Movie,MovieDTO>
     {
     }
 }

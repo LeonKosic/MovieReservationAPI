@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieReservationAPI", "Movi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5BC8F76B-4A3A-4706-AD8F-7A5AF4468198}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{3AD59DF4-0606-4A26-9175-5A2C05D45B26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{3AD59DF4-0606-4A26-9175-5A2C05D45B26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{2A344771-45A3-4575-B840-8C7FF225C3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{2A344771-45A3-4575-B840-8C7FF225C3CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16282F89-4215-42FC-BE95-AEF54DC9B676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{16282F89-4215-42FC-BE95-AEF54DC9B676}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0D10ACB1-190D-448C-A73D-07EB1244CCCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{16282F89-4215-42FC-BE95-AEF54DC9B676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16282F89-4215-42FC-BE95-AEF54DC9B676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16282F89-4215-42FC-BE95-AEF54DC9B676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D10ACB1-190D-448C-A73D-07EB1244CCCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D10ACB1-190D-448C-A73D-07EB1244CCCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D10ACB1-190D-448C-A73D-07EB1244CCCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D10ACB1-190D-448C-A73D-07EB1244CCCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{3AD59DF4-0606-4A26-9175-5A2C05D45B26} = {5BC8F76B-4A3A-4706-AD8F-7A5AF4468198}
 		{2A344771-45A3-4575-B840-8C7FF225C3CB} = {5BC8F76B-4A3A-4706-AD8F-7A5AF4468198}
 		{16282F89-4215-42FC-BE95-AEF54DC9B676} = {5BC8F76B-4A3A-4706-AD8F-7A5AF4468198}
+		{0D10ACB1-190D-448C-A73D-07EB1244CCCE} = {5BC8F76B-4A3A-4706-AD8F-7A5AF4468198}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC27C517-27DD-4133-B362-C361EA50A579}

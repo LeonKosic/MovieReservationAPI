@@ -39,11 +39,11 @@ namespace MovieReservationAPI.Extensions
         }
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IMoviesService, MoviesService>();
-            services.AddScoped<ISchedulesService, SchedulesService>();
-            services.AddScoped<ITicketsService, TicketsService>();
-            services.AddScoped<ISeatsService, SeatsService>();
-            services.AddScoped<ITheatersService, TheatersService>();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<ISeatService, SeatService>();
+            services.AddScoped<ITheaterService, TheaterService>();
             return services;
         }
         public static IServiceCollection AddRepositories(this IServiceCollection services)

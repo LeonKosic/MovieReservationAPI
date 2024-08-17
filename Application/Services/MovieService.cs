@@ -6,7 +6,7 @@ using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class MoviesService(IMovieRepository repository,IMapper mapper) : IMoviesService
+    public class MovieService(IMovieRepository repository,IMapper mapper) : IMovieService
     {
         private readonly IMovieRepository _repository = repository;
         private readonly IMapper _mapper = mapper;

@@ -3,9 +3,7 @@ using MovieReservationAPI.Models;
 
 namespace MovieReservationAPI.Interfaces.IServices
 {
-    public interface ITicketsService:IBaseService<Ticket,TicketDTO>
+    public interface ITheaterService: IBaseService<Theater,TheaterDTO>
     {
-        public Task<TicketDTO> Buy(int id, string userId);
-    
     }
 }

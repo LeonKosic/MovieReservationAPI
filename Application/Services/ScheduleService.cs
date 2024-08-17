@@ -6,7 +6,7 @@ using MovieReservationAPI.Models.Entities;
 
 namespace ScheduleReservationAPI.Services
 {
-    public class SchedulesService(IScheduleRepository repository, IMapper mapper) : ISchedulesService
+    public class ScheduleService(IScheduleRepository repository, IMapper mapper) : IScheduleService
     {
         private readonly IScheduleRepository _repository = repository;
         private readonly IMapper _mapper = mapper;

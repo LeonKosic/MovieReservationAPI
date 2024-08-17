@@ -7,7 +7,7 @@ using MovieReservationAPI.Models.Entities;
 
 namespace MovieReservationAPI.Services
 {
-    public class SeatsService(ISeatRepository repository,IMapper mapper) : ISeatsService
+    public class SeatService(ISeatRepository repository,IMapper mapper) : ISeatService
     {
         private readonly ISeatRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
