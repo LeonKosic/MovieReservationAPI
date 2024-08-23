@@ -1,45 +1,58 @@
 ﻿using AutoMapper;
+using Domain.Errors;
 using Domain.Interfaces.IRepositories;
-using MovieReservationAPI.Interfaces.IServices;
-using MovieReservationAPI.Models;
-using MovieReservationAPI.Models.Entities;
+using Domain.Interfaces.IServices;
+using Domain.Models;
+using Domain.Models.Entities;
+using Domain.Results;
+using System.Collections.Generic;
 
-namespace MovieReservationAPI.Services
+namespace Application.Services
 {
     public class TheatersService(ITheaterRepository repository, IMapper mapper) : ITheatersService
     {
         private readonly ITheaterRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
-        
-        public async Task Create(TheaterDTO newTheater)
+     
+        public async Task<Result> Create(TheaterDTO newTheater)
         {
-            Theater  theater= _mapper.Map<Theater>(newTheater);
+            var theater= _mapper.Map<Theater>(newTheater);
             await _repository.Create(theater);
+            return Result.Success();
         }
 
-        public async Task Delete(int id)
+        public async Task<Result> Delete(int id)
         {
             var theater = await _repository.Get(id);
-            if(theater!=null) await _repository.Delete(theater);
+            if(theater is null) return Result.Failure(Error.NotFound); 
+            await _repository.Delete(theater);
+            return Result.Success();
         }
 
-        public async Task<ICollection<TheaterDTO>> Get()
+        public async Task<Result<ICollection<TheaterDTO>>> Get()
         {
-              return _mapper.Map<ICollection<TheaterDTO> >(await _repository.Get());
+            var res = await _repository.Get();
+            if (res is null) return Result<ICollection<TheaterDTO>>.Failure(Error.NotFound);
+            var theaters = _mapper.Map<ICollection<TheaterDTO>>(res);
+            return Result<ICollection<TheaterDTO>>.Success(theaters);
         }
 
-        public async Task<TheaterDTO?> Get(int id)
+        public async Task<Result<TheaterDTO>> Get(int id)
         {
-            return _mapper.Map<TheaterDTO>(await _repository.Get(id));
+            var theater = await _repository.Get(id);
+            if(theater is null) return Result<TheaterDTO>.Failure(Error.NotFound);
+            var theaterDTO = _mapper.Map<TheaterDTO>(theater);
+            return Result<TheaterDTO>.Success(theaterDTO); 
         }
 
 
-        public async Task Update(int id, TheaterDTO updatedTheater)
+        public async Task<Result> Update(int id, TheaterDTO updatedTheater)
         {
-            Theater? theater = await _repository.Get(id);
-            if (theater == null) return;
+            var theater = await _repository.Get(id);
+            if (theater == null) return Result.Failure(Error.NotFound);
             _mapper.Map(updatedTheater,theater);
             await _repository.Save();
+            return Result.Success();
         }
     }
 }

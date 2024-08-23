@@ -1,4 +1,4 @@
-﻿using MovieReservationAPI.Models.Entities;
+﻿using Domain.Models.Entities;
 
 namespace Domain.Interfaces.IRepositories
 {

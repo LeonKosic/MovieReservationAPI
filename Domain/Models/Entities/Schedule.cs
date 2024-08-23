@@ -1,4 +1,4 @@
-﻿namespace MovieReservationAPI.Models.Entities
+﻿namespace Domain.Models.Entities
 {
     public class Schedule
     {

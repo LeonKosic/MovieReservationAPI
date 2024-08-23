@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MovieReservationAPI.Models.Entities
+namespace Domain.Models.Entities
 {
     public class Movie
     {

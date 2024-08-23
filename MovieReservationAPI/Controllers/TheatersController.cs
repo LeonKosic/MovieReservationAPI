@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieReservationAPI.Models.Entities;
+using Domain.Models.Entities;
 using NSwag.Annotations;
-using MovieReservationAPI.Models;
+using Domain.Models;
 using MovieReservationAPI.Interfaces.IServices;
 namespace MovieReservationAPI.Controllers
 {

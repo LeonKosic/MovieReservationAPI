@@ -1,7 +1,7 @@
-﻿using MovieReservationAPI.Models.Entities;
+﻿using Domain.Models.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReservationAPI.Models
+namespace Domain.Models
 {
     public readonly record struct SeatDTO(int Id,int TheaterId);
 

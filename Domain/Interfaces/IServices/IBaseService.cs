@@ -1,16 +1,15 @@
-﻿using MovieReservationAPI.Models.Entities;
-using MovieReservationAPI.Models;
+﻿using Domain.Results;
 
-namespace MovieReservationAPI.Interfaces.IServices
+namespace Domain.Interfaces.IServices
 {
-    public interface IBaseService<T,TDO> where T : class where TDO : struct
+    public interface IBaseService<T,DTO> where T : class where DTO : struct
     {
-        public Task<ICollection<TDO>> Get();
+        public Task<Result<ICollection<DTO>>> Get();
 
-        public Task<TDO?> Get(int id);
+        public Task<Result<DTO>> Get(int id);
 
-        public Task Create(TDO newTheater);
-        public Task Update(int id, TDO updatedTheater);
-        public Task Delete(int id);
+        public Task<Result> Create(DTO newTheater);
+        public Task<Result> Update(int id, DTO updatedTheater);
+        public Task<Result> Delete(int id);
     }
 }

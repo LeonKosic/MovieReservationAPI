@@ -2,9 +2,9 @@
 using Domain.Interfaces.IRepositories;
 using Infrastructure.Repositories;
 using MovieReservationAPI.Interfaces.IServices;
-using MovieReservationAPI.Models;
-using MovieReservationAPI.Models.Entities;
-using MovieReservationAPI.Services;
+using Domain.Models;
+using Domain.Models.Entities;
+using Application.Services;
 using ScheduleReservationAPI.Services;
 
 namespace MovieReservationAPI.Extensions

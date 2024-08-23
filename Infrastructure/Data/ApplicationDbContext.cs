@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using MovieReservationAPI.Models.Entities;
+using Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MovieReservationAPI.Data

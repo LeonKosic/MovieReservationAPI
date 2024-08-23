@@ -1,11 +1,12 @@
-﻿using MovieReservationAPI.Models.Entities;
-using MovieReservationAPI.Models;
+﻿using Domain.Models.Entities;
+using Domain.Models;
+using Domain.Results;
 
-namespace MovieReservationAPI.Interfaces.IServices
+namespace Domain.Interfaces.IServices
 {
     public interface ITicketsService:IBaseService<Ticket,TicketDTO>
     {
-        public Task<TicketDTO> Buy(int id, string userId);
+        public Task<Result<TicketDTO>> Buy(int id, string userId);
     
     }
 }

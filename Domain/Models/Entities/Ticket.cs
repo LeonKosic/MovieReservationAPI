@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieReservationAPI.Models.Entities
+namespace Domain.Models.Entities
 {
     public class Ticket
     {

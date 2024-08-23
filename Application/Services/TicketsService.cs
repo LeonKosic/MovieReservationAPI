@@ -1,45 +1,57 @@
 ﻿using AutoMapper;
+using Domain.Errors;
 using Domain.Interfaces.IRepositories;
-using MovieReservationAPI.Interfaces.IServices;
-using MovieReservationAPI.Models;
-using MovieReservationAPI.Models.Entities;
+using Domain.Interfaces.IServices;
+using Domain.Models;
+using Domain.Models.Entities;
+using Domain.Results;
 
-namespace MovieReservationAPI.Services
+namespace Application.Services
 {
     public class TicketsService(ITicketRepository repository, IMapper mapper) : ITicketsService
     {
         private ITicketRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
-        public async Task Create(TicketDTO newTicket)
+        public async Task<Result> Create(TicketDTO newTicket)
         {
             Ticket ticket = _mapper.Map<Ticket>(newTicket);
             await _repository.Create(ticket);
+            return Result.Success();
         }
 
-        public async Task Delete(int id)
+        public async Task<Result> Delete(int id)
         {
             var ticket = await _repository.Get(id);
-            if(ticket!=null) await _repository.Delete(ticket);
+            if (ticket is null) return Result.Failure(Error.NotFound);
+            await _repository.Delete(ticket);
+            return Result.Success();
         }
 
-        public async Task<ICollection<TicketDTO>> Get()
+        public async Task<Result<ICollection<TicketDTO>>> Get()
         {
-            return _mapper.Map<ICollection<TicketDTO>>(await _repository.Get());
+            var tickets = await _repository.Get();
+            if(tickets is null) return Result<ICollection<TicketDTO>>.Failure(Error.NotFound);
+            var ticketsDTO=_mapper.Map<ICollection<TicketDTO>>(tickets);
+            return Result<ICollection<TicketDTO>>.Success(ticketsDTO);  
         }
 
-        public async Task<TicketDTO?> Get(int id)
+        public async Task<Result<TicketDTO>> Get(int id)
         {
             var ticket = await _repository.Get(id);
-            return _mapper.Map<TicketDTO>(ticket);
+            if (ticket is null) return Result<TicketDTO>.Failure(Error.NotFound);
+            var ticketDTO = _mapper.Map<TicketDTO>(ticket);
+            return Result<TicketDTO>.Success(ticketDTO);
         }
 
-        public async Task Update(int id, TicketDTO updatedTicket)
+        public async Task<Result> Update(int id, TicketDTO updatedTicket)
         {
             var ticket = await _repository.Get(id);
+            if(ticket is null) return Result.Failure(Error.NotFound);
             _mapper.Map(updatedTicket,ticket);
             await _repository.Save();
+            return Result.Success();
         }
-        public async Task<TicketDTO> Buy(int id, string userId)
+        public async Task<Result<TicketDTO>> Buy(int id, string userId)
         {
             throw new NotImplementedException();//TODO
         }

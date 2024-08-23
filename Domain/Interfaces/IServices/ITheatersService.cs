@@ -1,7 +1,7 @@
-﻿using MovieReservationAPI.Models.Entities;
-using MovieReservationAPI.Models;
+﻿using Domain.Models.Entities;
+using Domain.Models;
 
-namespace MovieReservationAPI.Interfaces.IServices
+namespace Domain.Interfaces.IServices
 {
     public interface ITheatersService: IBaseService<Theater,TheaterDTO>
     {

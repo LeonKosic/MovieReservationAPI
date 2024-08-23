@@ -220,7 +220,7 @@ namespace MovieReservationAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Movie", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,7 @@ namespace MovieReservationAPI.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Schedule", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Schedule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -278,7 +278,7 @@ namespace MovieReservationAPI.Migrations
                     b.ToTable("Schedules");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Seat", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Seat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,7 +296,7 @@ namespace MovieReservationAPI.Migrations
                     b.ToTable("Seats");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Theater", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Theater", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +313,7 @@ namespace MovieReservationAPI.Migrations
                     b.ToTable("Theaters");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Ticket", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Ticket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -395,15 +395,15 @@ namespace MovieReservationAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Schedule", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Schedule", b =>
                 {
-                    b.HasOne("MovieReservationAPI.Models.Entities.Movie", "Movie")
+                    b.HasOne("Domain.Models.Entities.Movie", "Movie")
                         .WithMany("Schedules")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieReservationAPI.Models.Entities.Theater", "Theater")
+                    b.HasOne("Domain.Models.Entities.Theater", "Theater")
                         .WithMany("Schedules")
                         .HasForeignKey("TheaterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -414,9 +414,9 @@ namespace MovieReservationAPI.Migrations
                     b.Navigation("Theater");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Seat", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Seat", b =>
                 {
-                    b.HasOne("MovieReservationAPI.Models.Entities.Theater", "Theater")
+                    b.HasOne("Domain.Models.Entities.Theater", "Theater")
                         .WithMany("Seats")
                         .HasForeignKey("TheaterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -425,17 +425,17 @@ namespace MovieReservationAPI.Migrations
                     b.Navigation("Theater");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Ticket", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Ticket", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
 
-                    b.HasOne("MovieReservationAPI.Models.Entities.Schedule", "Schedule")
+                    b.HasOne("Domain.Models.Entities.Schedule", "Schedule")
                         .WithMany("Tickets")
                         .HasForeignKey("ScheduleId");
 
-                    b.HasOne("MovieReservationAPI.Models.Entities.Seat", "Seat")
+                    b.HasOne("Domain.Models.Entities.Seat", "Seat")
                         .WithMany("Tickets")
                         .HasForeignKey("SeatId");
 
@@ -446,22 +446,22 @@ namespace MovieReservationAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Movie", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Movie", b =>
                 {
                     b.Navigation("Schedules");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Schedule", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Schedule", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Seat", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Seat", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("MovieReservationAPI.Models.Entities.Theater", b =>
+            modelBuilder.Entity("Domain.Models.Entities.Theater", b =>
                 {
                     b.Navigation("Schedules");
 

@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.IRepositories;
 using MovieReservationAPI.Data;
-using MovieReservationAPI.Models.Entities;
+using Domain.Models.Entities;
 
 
 namespace Infrastructure.Repositories

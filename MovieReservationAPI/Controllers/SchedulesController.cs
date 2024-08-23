@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MovieReservationAPI.Models;
+using Domain.Models;
 using NSwag.Annotations;
-using MovieReservationAPI.Interfaces.IServices;
+using Domain.Interfaces.IServices;
+using MovieReservationAPI.Extensions;
 
 namespace ScheduleReservationAPI.Controllers
 {
@@ -13,38 +14,46 @@ namespace ScheduleReservationAPI.Controllers
         private readonly ISchedulesService _schedulesService = schedulesService;
 
         [HttpGet]
-        public async Task<ICollection<ScheduleDTO>> Get() =>
-            await _schedulesService.Get();
+        public async Task<ActionResult<ICollection<ScheduleDTO>>> Get()
+        {
+            var result=await _schedulesService.Get();
+            return result.Match<ActionResult<ICollection<ScheduleDTO>>>(
+                onSuccess:()=>Ok(result),
+                onFailure:err=>BadRequest(err));
+        }
 
         [HttpGet("id")]
         public async Task<ActionResult<ScheduleDTO>> Get(int id)
         {
-            return await _schedulesService.Get(id);
+            var result= await _schedulesService.Get(id);
+            return result.Match<ActionResult<ScheduleDTO>>(
+                onSuccess: () => Ok(result),
+                onFailure: err => BadRequest(err));
             
         }
         [HttpPost, Authorize]
 
         public async Task<IActionResult> Post(ScheduleDTO scheduleDTO)
         {
-            await _schedulesService.Create(scheduleDTO);
-            return CreatedAtAction(nameof(Get), scheduleDTO);
+            var result = await _schedulesService.Create(scheduleDTO);
+            return result.Match<IActionResult>(onSuccess: () => Ok(result),onFailure:err=>BadRequest(err));
         }
 
         [HttpPut("id"), Authorize]
         public async Task<IActionResult> Update(int id, ScheduleDTO updatedSchedule)
         {
             
-            await _schedulesService.Update(id, updatedSchedule);
-            return Ok(updatedSchedule);
+            var result = await _schedulesService.Update(id, updatedSchedule);
+            return result.Match<IActionResult>(onSuccess:()=> Ok(result),onFailure: err=>BadRequest(err));
            
         }
         [HttpDelete("id"), Authorize]
         public async Task<IActionResult> Delete(int id)
         {
 
-            await _schedulesService.Delete(id);
+            var result=await _schedulesService.Delete(id);
 
-            return NoContent();
+            return result.Match<IActionResult>(onSuccess: () => Ok(result), onFailure: err => BadRequest(err));
         }
     }
 }

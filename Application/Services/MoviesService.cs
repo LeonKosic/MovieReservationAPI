@@ -1,45 +1,55 @@
 ﻿using AutoMapper;
+using Domain.Errors;
 using Domain.Interfaces.IRepositories;
-using MovieReservationAPI.Interfaces.IServices;
-using MovieReservationAPI.Models;
-using MovieReservationAPI.Models.Entities;
+using Domain.Interfaces.IServices;
+using Domain.Models;
+using Domain.Models.Entities;
+using Domain.Results;
 
-namespace MovieReservationAPI.Services
+namespace Application.Services
 {
     public class MoviesService(IMovieRepository repository,IMapper mapper) : IMoviesService
     {
         private readonly IMovieRepository _repository = repository;
         private readonly IMapper _mapper = mapper;
-        public async Task Create(MovieDTO newMovie)
+        public async Task<Result> Create(MovieDTO newMovie)
         {
             Movie movie = _mapper.Map<Movie>(newMovie);
             await _repository.Create(movie);
+            return Result.Success();
         }
 
-        public async Task Delete(int id)
+        public async Task<Result> Delete(int id)
         {
             Movie? movie = await _repository.Get(id);    
-            if(movie is not null)await _repository.Delete(movie);
+            if(movie is null) return Result.Failure(Error.NotFound);
+            await _repository.Delete(movie);
+            return Result.Success();
         }
 
-        public async Task<ICollection<MovieDTO>> Get()
+        public async Task<Result<ICollection<MovieDTO>>> Get()
         {
-            return  _mapper.Map<ICollection<MovieDTO>>(await _repository.Get());
+            var data= await _repository.Get();
+            if (data is null) return Result<ICollection<MovieDTO>>.Failure(Error.NotFound);
+            var movies = _mapper.Map<ICollection<MovieDTO>>(data);
+            return Result < ICollection < MovieDTO >>.Success(movies);
         }
 
-        public async Task<MovieDTO?> Get(int id)
+        public async Task<Result<MovieDTO>> Get(int id)
         {
             Movie? movie =await _repository.Get(id);
-            if (movie is null) return null;
-            return _mapper.Map<MovieDTO>(movie);
+            if (movie is null) return Result<MovieDTO>.Failure(new Error("404","Movie does not exist"));
+            var movieDTO = _mapper.Map<MovieDTO>(movie);
+            return Result<MovieDTO>.Success(movieDTO);
         }
 
-        public async Task Update(int id, MovieDTO updatedMovie)
+        public async Task<Result> Update(int id, MovieDTO updatedMovie)
         {
             Movie? movie = await _repository.Get(id);   
-            if (movie is null) return;
+            if (movie is null) return Result.Failure(new Error("404","Movie does not exist"));
             _mapper.Map(updatedMovie, movie);
             await _repository.Save();
+            return Result.Success();
         }
     }
 }
